@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PDF Q&A</title>
+</head>
+<body>
+
+<h2>Ask Your PDF</h2>
+
+<textarea id="query" rows="4" cols="50"></textarea><br><br>
+<button onclick="ask()">Ask</button>
+
+<p id="response"></p>
+
+<script>
+async function ask() {
+    const query = document.getElementById("query").value;
+
+    const res = await fetch("http://localhost:8000/ask", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ query })
+    });
+
+    const data = await res.json();
+    document.getElementById("response").innerText = data.answer;
+}
+</script>
+
+</body>
+</html>
